@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">IB CS HL Application</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="_1">1</string>
+    <string name="_2">2</string>
+    <string name="_3">3</string>
+    <string name="_4">4</string>
+    <string name="_5">5</string>
+    <string name="please_input_the_severity_of_hallway_congestion_1_is_lowest_5_is_highest">Please input the severity of hallway congestion(1 is lowest, 5 is highest)</string>
+    <string name="submit">SUBMIT</string>
+</resources>
