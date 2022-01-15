@@ -2,4 +2,5 @@
 Internal Assesment(IA) for IB Compuer Science HL 
 
 In order to view the code that is relevant: 
-app -> 
+app -> src -> main -> java -> com -> example -> ibcshlapplication
+
