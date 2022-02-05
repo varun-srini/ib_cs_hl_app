@@ -9,14 +9,21 @@ public class Room implements Comparator<Room> {
     private int ind;
     private double weight;
     private int nw;
+    private String name;
 
 
     public Room(){}
-
     public Room(int ind, double weight) {
-        nw = 1;
+        this.ind = ind;
         this.weight = weight;
+    }
+
+    public Room(int ind, String name) {
+        nw = 1;
+        this.weight = 3;
         this.ind=ind;
+        this.name = name;
+        this.hallway = ((int) this.name.charAt(0)) - 65;
         /*
         char re = name.charAt(0);
         int first = (int) re - 64;
@@ -35,8 +42,6 @@ public class Room implements Comparator<Room> {
     public int getInd() {
         return ind;
     }
-
-    public void setHallway(int h) {this.hallway =h;}
 
     public void update_weight(int w) {
         weight *= nw;

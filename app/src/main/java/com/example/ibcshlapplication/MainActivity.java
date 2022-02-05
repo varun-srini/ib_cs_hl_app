@@ -16,6 +16,7 @@ import com.example.ibcshlapplication.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private School school;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +34,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+        school = new School();
     }
 
     public void update_weights(View view) {
         System.out.println("yoooo it clicked");
-
-    }
-
-    public static void main(String[] args) {
 
     }
 
