@@ -21,21 +21,21 @@ public class School {
         O(n) for updating those, O(v + e) for djikstra, O(1) for accessing -> overall good time complexity
          */
     private static List<Room> rooms;
-    private Scanner scan;
     private static List<List<Room>> adjacent;
-    private static String[][] arr;
     Room[] roomhashed = new Room[1000];
     private static FastPath fp;
-    public School() {
+    public School() throws FileNotFoundException {
         rooms = new ArrayList<Room>();
-        scan = new Scanner("rooms.txt");
-        arr = new String[6][12];
+        File fin = new File("C:\\Users\\varun\\StudioProjects\\ib_cs_hl_app\\app\\src\\main\\java\\com\\example\\ibcshlapplication\\classrooms.txt");
+        Scanner scan = new Scanner(fin);
+        String[][] arr = new String[6][12];
         for (int i = 0; i < 12; i++) {
+            scan.nextLine();
             for (int j = 0; j < 6; j++) {
                 arr[j][i] = scan.next();
             }
-            scan.nextLine();
         }
+        adjacent = new ArrayList<List<Room>>();
 
 
         int q = 0;
@@ -89,6 +89,15 @@ public class School {
         ret += Integer.toBinaryString(Integer.parseInt(String.valueOf(name.charAt(3))));
         int index = Integer.parseInt(ret, 2);
         return index;
+    }
+
+    public void update_weights(String name, int w) {
+        Room r = roomhashed[hashh(name)];
+        for (int i = 0; i < rooms.size(); i++) {
+            if (rooms.get(i).getHallway() == r.getHallway()) {
+                rooms.get(i).update_weight(w);
+            }
+        }
     }
 
 
