@@ -5,45 +5,92 @@ import java.io.*;
 public class School {
 
     /*
-    plan of app:
-    be able to dfs on the rooms
-    ind is the index (1,2,3,4...)
-    convert letter of name to hallway (1-5)
-    convert room # to a hash using custom hash function
-    storing of rooms:
-    array1: has the rooms by index -> necessary because have to locate a room by index
-    array2: has the rooms by hash -> necessary because have to locate room properties with name -> could be done in O(n) looping through index array checking for name,
-    but def faster for O(1) with the use of extra space
+        plan of app:
+        be able to dfs on the rooms
+        ind is the index (1,2,3,4...)
+        convert letter of name to hallway (1-5)
+        convert room # to a hash using custom hash function -> convert back using ARRAY (NOT RHASH)
+        storing of rooms:
+        array1: has the rooms by ind -> necessary because have to locate rooms by ind
+        array2: has the rooms by hash -> have to convert name -> hash -> ind
 
-    also, adj list
-    between each room in a hallway, draw edge
-    have to look at school plan to determine corners and such
-    when weight updated, all rooms in the same hallway have their weights updated.
-    can be done O(1)? -> no unless complex structure of hallways
-    simply loop thru all rooms, see which have the same hallway, update their weights
-    O(n) for updating those, O(v + e) for djikstra, O(1) for accessing -> overall good time complexity
-     */
-    private List<Room> rooms;
-    Scanner scan;
-    private Room[] roomHash;
+        also, adj list
+        when weight updated, all rooms in the same hallway have their weights updated.
+        can be done O(1)? -> no unless complex structure of hallways
+        simply loop thru all rooms, see which have the same hallway, update their weights
+        O(n) for updating those, O(v + e) for djikstra, O(1) for accessing -> overall good time complexity
+         */
+    private static List<Room> rooms;
+    private Scanner scan;
+    private static List<List<Room>> adjacent;
+    private static String[][] arr;
+    Room[] roomhashed = new Room[1000];
+    private static FastPath fp;
     public School() {
         rooms = new ArrayList<Room>();
-        roomHash = new Room[999];
         scan = new Scanner("rooms.txt");
-        int i = 0;
-        while (scan.hasNextLine()) {
-            String name = scan.nextLine();
-            rooms.add(new Room(i, name));
-            char re = name.charAt(0);
-            int first = (int) re - 64;
-            String ret = Integer.toBinaryString(first);
-            ret += Integer.toBinaryString(Integer.parseInt(String.valueOf(name.charAt(1)))-1);
-            ret += name.charAt(2);
-            ret += Integer.toBinaryString(Integer.parseInt(String.valueOf(name.charAt(3))));
-            int ind = Integer.parseInt(ret, 2);
-            roomHash[ind] = new Room(i, name);
+        arr = new String[6][12];
+        for (int i = 0; i < 12; i++) {
+            for (int j = 0; j < 6; j++) {
+                arr[j][i] = scan.next();
+            }
+            scan.nextLine();
         }
+
+
+        int q = 0;
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 12; j++) {
+                if (!arr[i][j].equals("#####")) {
+                    Room y = new Room(q, arr[i][j]);
+                    rooms.add(y);
+                    roomhashed[hashh(arr[i][j])] = y;
+                    q++;
+                }
+            }
+        }
+
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 12; j++) {
+                if (!arr[i][j].equals("#####")) {
+                    int y = roomhashed[hashh(arr[i][j])].getInd();
+                    if (i-1 >= 0 && !arr[i-1][j].equals("#####")) adjacent.get(y).add(roomhashed[hashh(arr[i-1][j])]);
+                    if (i+1 <= 5 && !arr[i+1][j].equals("#####")) adjacent.get(y).add(roomhashed[hashh(arr[i+1][j])]);
+                    if (j-1 >= 0 && !arr[j-1][j].equals("#####")) adjacent.get(y).add(roomhashed[hashh(arr[j-1][j])]);
+                    if (j+1 <= 11 && !arr[j+1][j].equals("#####")) adjacent.get(y).add(roomhashed[hashh(arr[j+1][j])]);
+                }
+            }
+        }
+        fp = new FastPath(rooms.size(), adjacent);
+
+
+
+    }
+
+
+    public List<String> pathfinder(String loc, String des) {
+        fp.find_path(roomhashed[hashh(loc)].getInd(), roomhashed[hashh(des)].getInd());
+        List<Integer> res = fp.getPath();
+        List<String> fin = new ArrayList<String>();
+        for (int i = 0; i<res.size(); i++) {
+            fin.add(rooms.get(res.get(i)).getName());
+        }
+        return fin;
+    }
+
+
+    public static int hashh(String name) {
+        char re = name.charAt(0);
+        int first = (int) re - 64;
+        String ret = Integer.toBinaryString(first);
+        ret += Integer.toBinaryString(Integer.parseInt(String.valueOf(name.charAt(1)))-1);
+        ret += name.charAt(2);
+        ret += Integer.toBinaryString(Integer.parseInt(String.valueOf(name.charAt(3))));
+        int index = Integer.parseInt(ret, 2);
+        return index;
     }
 
 
 }
+
