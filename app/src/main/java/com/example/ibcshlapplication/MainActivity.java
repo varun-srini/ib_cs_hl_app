@@ -14,7 +14,11 @@ import android.app.Activity;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.EditText;
+import java.util.List;
+
 
 import com.example.ibcshlapplication.databinding.ActivityMainBinding;
 
@@ -27,8 +31,12 @@ public class MainActivity extends AppCompatActivity {
     private String curpos;
     private String finpos;
     private RadioGroup radioGroup;
+    private EditText editText;
+    private EditText editText2;
     private Button button3;
+    private Button button4;
     private RadioButton radioButton;
+    private TextView textView;
     private int w;
 
     @Override
@@ -60,6 +68,11 @@ public class MainActivity extends AppCompatActivity {
         View inflatedView = getLayoutInflater().inflate(R.layout.fragment_home, null);
         radioGroup = (RadioGroup) inflatedView.findViewById(R.id.radioGroup);
         button3 = (Button) inflatedView.findViewById(R.id.button3);
+        inflatedView = getLayoutInflater().inflate(R.layout.fragment_dashboard, null);
+        button4 = (Button) inflatedView.findViewById(R.id.button4);
+        editText = (EditText) inflatedView.findViewById(R.id.editTextTextPersonName);
+        editText2 = (EditText) inflatedView.findViewById(R.id.editTextTextPersonName2);
+        textView = (TextView) inflatedView.findViewById(R.id.textView1);
 
         button3.setOnClickListener(new View.OnClickListener() {
 
@@ -78,5 +91,30 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
+        button4.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                // get selected radio button from radioGroup
+                String location = editText.getText().toString();
+                String destination = editText2.getText().toString();
+
+                curpos = location;
+                finpos = destination;
+
+                List<String> path = school.pathfinder(curpos, finpos);
+                StringBuilder x = new StringBuilder();
+                for (int i = 0; i < path.size(); i++) {
+                    x.append(path.get(i)).append(" ");
+                }
+                String y = x.toString();
+                textView.setText(y);
+            }
+
+        });
+
     }
+
+
 }
