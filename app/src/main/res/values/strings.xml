@@ -5,10 +5,15 @@
     <string name="title_notifications">Notifications</string>
     <string name="_1">1</string>
     <string name="_2">2</string>
-    <string name="_3">3</string>
+    <string name="_3">3</string>`
     <string name="_4">4</string>
     <string name="_5">5</string>
     <string name="please_input_the_severity_of_hallway_congestion_1_is_lowest_5_is_highest">Please input the severity of hallway congestion(1 is lowest, 5 is highest)</string>
     <string name="submit">SUBMIT</string>
     <string name="find_route">Find Route</string>
+    <string name="destination">Destination</string>
+    <string name="back">BACK</string>
+    <string name="location">Location</string>
+    <string name="please_input_current_room_number_below">Please input current room number below:</string>
+    <string name="please_input_destination">Please Input Destination</string>
 </resources>

@@ -16,12 +16,12 @@ public class FastPath {
         dist = new double[v];
         settled = new HashSet<Integer>();
         pq = new PriorityQueue<Room>(v, new Room());
-        parent = new int[v];
         this.adj = adj;
-        path = new ArrayList<Integer>();
     }
 
-    public void find_path(int src, int dest) {
+    public void find_path(int src) {
+        parent = new int[v];
+        path = new ArrayList<Integer>();
         parent[src] = -1;
         for (int i = 0; i < v; i++) dist[i] = Double.MAX_VALUE;
         pq.add(new Room(src, 0));
@@ -31,11 +31,10 @@ public class FastPath {
             int u = pq.remove().getInd();
             if (settled.contains(u)) continue;
             settled.add(u);
-
             nbrs(u);
+
         }
 
-        buildPath(dest);
     }
 
     public void nbrs(int u) {
@@ -63,11 +62,11 @@ public class FastPath {
             return;
 
         buildPath(parent[j]);
-
         path.add(j);
     }
 
-    public List<Integer> getPath() {
+    public List<Integer> getPath(int dest) {
+        buildPath(dest);
         return path;
     }
 
